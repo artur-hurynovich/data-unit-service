@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document
-public class DataUnitDocument implements DataUnitPersistentModel<String> {
+public class DataUnitDocument implements DataUnitPersistentModel {
 
     @Id
     private String id;

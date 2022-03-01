@@ -3,7 +3,7 @@ package com.hurynovich.data_unit_service.model.impl;
 import java.util.List;
 
 public record DataUnitApiModelImpl(String id, String schemaId, List<DataUnitPropertyApiModel> properties)
-        implements DataUnitApiModel<String> {
+        implements DataUnitApiModel {
 
     @Override
     public String getId() {
