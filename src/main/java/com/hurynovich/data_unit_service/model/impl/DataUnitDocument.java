@@ -1,11 +1,13 @@
 package com.hurynovich.data_unit_service.model.impl;
 
+import com.hurynovich.GenerateMetamodel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Document
+@GenerateMetamodel
 public class DataUnitDocument implements DataUnitPersistentModel {
 
     @Id
