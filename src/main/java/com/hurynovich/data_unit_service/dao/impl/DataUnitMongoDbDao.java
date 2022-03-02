@@ -1,6 +1,8 @@
 package com.hurynovich.data_unit_service.dao.impl;
 
 import com.hurynovich.data_unit_service.dao.DataUniDao;
+import com.hurynovich.data_unit_service.dao.filter.DataUnitQueryCriteriaBuilder;
+import com.hurynovich.data_unit_service.dao.filter.model.DataUnitFilter;
 import com.hurynovich.data_unit_service.model.impl.DataUnitDocument;
 import com.hurynovich.data_unit_service.model.impl.DataUnitDocument_;
 import com.hurynovich.data_unit_service.model.impl.DataUnitPersistentModel;
@@ -20,8 +22,12 @@ public class DataUnitMongoDbDao implements DataUniDao {
 
     private final ReactiveMongoTemplate template;
 
-    public DataUnitMongoDbDao(@NonNull final ReactiveMongoTemplate template) {
+    private final DataUnitQueryCriteriaBuilder criteriaBuilder;
+
+    public DataUnitMongoDbDao(@NonNull final ReactiveMongoTemplate template,
+                              @NonNull final DataUnitQueryCriteriaBuilder criteriaBuilder) {
         this.template = template;
+        this.criteriaBuilder = criteriaBuilder;
     }
 
     @Override
@@ -38,9 +44,10 @@ public class DataUnitMongoDbDao implements DataUniDao {
 
     @Override
     public Mono<List<DataUnitPersistentModel>> findAllBySchemaId(@NonNull final String schemaId,
+                                                                 @NonNull final DataUnitFilter filter,
                                                                  @NonNull final PaginationParams params) {
         final Query query = new Query()
-                .addCriteria(Criteria.where(DataUnitDocument_.SCHEMA_ID).is(schemaId))
+                .addCriteria(criteriaBuilder.build(filter))
                 .skip(params.getOffset())
                 .limit(params.getLimit());
 

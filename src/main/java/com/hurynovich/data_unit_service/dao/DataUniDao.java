@@ -1,5 +1,6 @@
 package com.hurynovich.data_unit_service.dao;
 
+import com.hurynovich.data_unit_service.dao.filter.model.DataUnitFilter;
 import com.hurynovich.data_unit_service.model.impl.DataUnitPersistentModel;
 import com.hurynovich.paginator.PaginationParams;
 import org.springframework.lang.NonNull;
@@ -13,7 +14,8 @@ public interface DataUniDao {
 
     Mono<DataUnitPersistentModel> findById(@NonNull String id);
 
-    Mono<List<DataUnitPersistentModel>> findAllBySchemaId(@NonNull String schemaId, @NonNull PaginationParams params);
+    Mono<List<DataUnitPersistentModel>> findAllBySchemaId(@NonNull String schemaId, @NonNull DataUnitFilter filter,
+                                                          @NonNull PaginationParams params);
 
     Mono<DataUnitPersistentModel> deleteById(@NonNull String id);
 
