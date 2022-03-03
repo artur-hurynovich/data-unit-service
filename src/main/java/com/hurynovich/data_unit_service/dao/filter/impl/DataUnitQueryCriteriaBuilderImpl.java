@@ -9,12 +9,10 @@ import com.hurynovich.data_unit_service.model.impl.DataUnitPropertyServiceModelI
 import com.hurynovich.data_unit_service.model.impl.DataUnitServiceModelImpl_;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-@Service
 public class DataUnitQueryCriteriaBuilderImpl implements DataUnitQueryCriteriaBuilder {
 
     private final Map<CriteriaComparison, BiConsumer<Criteria, DataUnitPropertyCriteria>> valueCriteriaAppliersByComparison;

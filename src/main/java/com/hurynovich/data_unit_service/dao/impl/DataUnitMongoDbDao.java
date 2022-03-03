@@ -1,6 +1,6 @@
 package com.hurynovich.data_unit_service.dao.impl;
 
-import com.hurynovich.data_unit_service.dao.DataUniDao;
+import com.hurynovich.data_unit_service.dao.DataUnitDao;
 import com.hurynovich.data_unit_service.dao.filter.DataUnitQueryCriteriaBuilder;
 import com.hurynovich.data_unit_service.dao.filter.model.DataUnitFilter;
 import com.hurynovich.data_unit_service.model.impl.DataUnitDocument;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class DataUnitMongoDbDao implements DataUniDao {
+public class DataUnitMongoDbDao implements DataUnitDao {
 
     private final ReactiveMongoTemplate template;
 
@@ -43,9 +43,8 @@ public class DataUnitMongoDbDao implements DataUniDao {
     }
 
     @Override
-    public Mono<List<DataUnitPersistentModel>> findAllBySchemaId(@NonNull final String schemaId,
-                                                                 @NonNull final DataUnitFilter filter,
-                                                                 @NonNull final PaginationParams params) {
+    public Mono<List<DataUnitPersistentModel>> findAll(@NonNull final DataUnitFilter filter,
+                                                       @NonNull final PaginationParams params) {
         final Query query = new Query()
                 .addCriteria(criteriaBuilder.build(filter))
                 .skip(params.getOffset())
@@ -70,9 +69,9 @@ public class DataUnitMongoDbDao implements DataUniDao {
     }
 
     @Override
-    public Mono<Long> countBySchemaId(@NonNull final String schemaId) {
+    public Mono<Long> count(@NonNull DataUnitFilter filter) {
         final Query query = new Query()
-                .addCriteria(Criteria.where(DataUnitDocument_.SCHEMA_ID).is(schemaId));
+                .addCriteria(criteriaBuilder.build(filter));
 
         return template.count(query, DataUnitDocument.class);
     }

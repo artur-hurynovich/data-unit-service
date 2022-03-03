@@ -8,16 +8,16 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public interface DataUniDao {
+public interface DataUnitDao {
 
     Mono<DataUnitPersistentModel> save(@NonNull DataUnitPersistentModel dataUnit);
 
     Mono<DataUnitPersistentModel> findById(@NonNull String id);
 
-    Mono<List<DataUnitPersistentModel>> findAllBySchemaId(@NonNull String schemaId, @NonNull DataUnitFilter filter,
-                                                          @NonNull PaginationParams params);
+    Mono<List<DataUnitPersistentModel>> findAll(@NonNull DataUnitFilter filter,
+                                                @NonNull PaginationParams params);
 
     Mono<DataUnitPersistentModel> deleteById(@NonNull String id);
 
-    Mono<Long> countBySchemaId(@NonNull String schemaId);
+    Mono<Long> count(@NonNull DataUnitFilter filter);
 }

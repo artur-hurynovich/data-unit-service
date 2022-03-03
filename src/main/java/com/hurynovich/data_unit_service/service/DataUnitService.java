@@ -14,10 +14,10 @@ public interface DataUnitService {
 
     Mono<DataUnitServiceModel> findById(@NonNull String id);
 
-    Mono<List<DataUnitServiceModel>> findAllBySchemaId(@NonNull String schemaId, @NonNull DataUnitFilter filter,
-                                                       @NonNull PaginationParams params);
+    Mono<List<DataUnitServiceModel>> findAll(@NonNull DataUnitFilter filter,
+                                             @NonNull PaginationParams params);
 
     Mono<DataUnitServiceModel> deleteById(@NonNull String id);
 
-    Mono<Long> countBySchemaId(@NonNull String schemaId);
+    Mono<Long> count(@NonNull DataUnitFilter filter);
 }

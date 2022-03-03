@@ -1,7 +1,7 @@
 package com.hurynovich.data_unit_service.service.impl;
 
 import com.hurynovich.data_unit_service.converter.impl.DataUnitServiceConverter;
-import com.hurynovich.data_unit_service.dao.DataUniDao;
+import com.hurynovich.data_unit_service.dao.DataUnitDao;
 import com.hurynovich.data_unit_service.dao.filter.model.DataUnitFilter;
 import com.hurynovich.data_unit_service.model.impl.DataUnitServiceModel;
 import com.hurynovich.data_unit_service.service.DataUnitService;
@@ -16,11 +16,11 @@ import java.util.List;
 @Service
 public class DataUnitServiceImpl implements DataUnitService {
 
-    private final DataUniDao dao;
+    private final DataUnitDao dao;
 
     private final DataUnitServiceConverter converter;
 
-    public DataUnitServiceImpl(@NonNull final DataUniDao dao, @NonNull final DataUnitServiceConverter converter) {
+    public DataUnitServiceImpl(@NonNull final DataUnitDao dao, @NonNull final DataUnitServiceConverter converter) {
         this.dao = dao;
         this.converter = converter;
     }
@@ -39,10 +39,9 @@ public class DataUnitServiceImpl implements DataUnitService {
     }
 
     @Override
-    public Mono<List<DataUnitServiceModel>> findAllBySchemaId(@NonNull final String schemaId,
-                                                              @NonNull final DataUnitFilter filter,
-                                                              @NonNull final PaginationParams params) {
-        return dao.findAllBySchemaId(schemaId, filter, params)
+    public Mono<List<DataUnitServiceModel>> findAll(@NonNull final DataUnitFilter filter,
+                                                    @NonNull final PaginationParams params) {
+        return dao.findAll(filter, params)
                 .flatMap(schemas -> Mono.just(MassProcessingUtils.processQuietly(schemas, converter::convert)));
     }
 
@@ -53,7 +52,7 @@ public class DataUnitServiceImpl implements DataUnitService {
     }
 
     @Override
-    public Mono<Long> countBySchemaId(@NonNull final String schemaId) {
-        return dao.countBySchemaId(schemaId);
+    public Mono<Long> count(@NonNull final DataUnitFilter filter) {
+        return dao.count(filter);
     }
 }
